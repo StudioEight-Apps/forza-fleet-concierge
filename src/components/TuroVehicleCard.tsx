@@ -3,6 +3,7 @@ import { Vehicle } from '@/data/vehicles';
 import { Star, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
+import { useFavorites } from '@/hooks/useFavorites';
 
 interface TuroVehicleCardProps {
   vehicle: Vehicle;
@@ -11,12 +12,20 @@ interface TuroVehicleCardProps {
 
 const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
   const price = vehicle.originalPrice;
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorited = isFavorite(vehicle.id);
   
   // Stable rating based on vehicle id
   const rating = useMemo(() => {
     const seed = vehicle.id.charCodeAt(0) + vehicle.id.charCodeAt(vehicle.id.length - 1);
     return 4.8 + (seed % 20) / 100;
   }, [vehicle.id]);
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(vehicle.id);
+  };
 
   return (
     <motion.div
@@ -35,8 +44,17 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
             />
 
             {/* Heart icon */}
-            <button className="absolute top-2 right-2 p-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-5 h-5 fill-black/50 stroke-white stroke-2">
+            <button 
+              onClick={handleFavoriteClick}
+              className="absolute top-2 right-2 p-1.5 transition-transform active:scale-90"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 32 32" 
+                className={`w-5 h-5 stroke-white stroke-2 transition-colors ${
+                  favorited ? 'fill-red-500' : 'fill-black/50'
+                }`}
+              >
                 <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
               </svg>
             </button>
