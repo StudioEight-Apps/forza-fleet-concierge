@@ -96,7 +96,7 @@ const VehicleDetail = () => {
                   <p className="text-muted-foreground text-sm">Mon, Jan 16 at 9:00 AM</p>
                 </div>
               </div>
-              <button className="text-primary font-medium text-sm">Change &gt;</button>
+              <button onClick={() => navigate(`/booking/${id}`)} className="text-primary font-medium text-sm">Change &gt;</button>
             </div>
           </div>
 
