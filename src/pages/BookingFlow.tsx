@@ -270,24 +270,45 @@ const BookingFlow = () => {
             <h2 className="font-semibold mb-4">Price details</h2>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">${price.toLocaleString()} x {numberOfDays} days</span>
+                <span className="text-muted-foreground">Rental Price: x {numberOfDays}d</span>
                 <span>${subtotal.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Service fee</span>
+                <span className="text-muted-foreground">Rental Fees:</span>
                 <span>${serviceFee.toLocaleString()}</span>
               </div>
               <div className="flex justify-between font-semibold pt-3 border-t border-border">
-                <span>Total</span>
+                <span>Estimated Total</span>
                 <span>${total.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
+          {/* Payment Summary */}
+          <div className="mb-6 space-y-3">
+            <div className="flex justify-between">
+              <span className="text-primary font-medium">Amount Charging Now</span>
+              <span className="text-primary font-medium">$250.00</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-primary font-medium">Balance Due on Delivery</span>
+              <span className="text-primary font-medium">${(total - 250).toLocaleString()}</span>
+            </div>
+          </div>
+
+          {/* Important Notice */}
+          <div className="bg-primary/10 border-l-4 border-primary p-4 rounded-r-lg mb-24">
+            <p className="text-sm">
+              <span className="font-semibold">Important:</span> You will be charged{" "}
+              <span className="font-semibold">$250.00</span> now. The remaining balance of{" "}
+              <span className="font-semibold">${(total - 250).toLocaleString()}</span> must be paid in cash when your vehicle is delivered.
+            </p>
+          </div>
+
           {/* Bottom Bar */}
           <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 safe-area-bottom">
             <Button className="w-full h-14 text-lg font-semibold">
-              Request to book
+              Reserve Now
             </Button>
           </div>
         </motion.div>
