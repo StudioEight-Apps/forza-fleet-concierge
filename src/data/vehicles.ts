@@ -7,6 +7,7 @@ export interface Vehicle {
   originalPrice: number;
   salePrice?: number;
   year: number;
+  seats: number;
   specs: {
     horsepower: number;
     acceleration: string;
@@ -27,6 +28,7 @@ export const vehicles: Vehicle[] = [
     image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1299,
     year: 2024,
+    seats: 2,
     specs: {
       horsepower: 789,
       acceleration: '3.4s 0-60',
@@ -39,19 +41,20 @@ export const vehicles: Vehicle[] = [
   },
   {
     id: '2',
-    brand: 'Rolls Royce',
-    model: 'Ghost',
+    brand: 'Range Rover',
+    model: 'Sport',
     type: 'suv',
     image: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&auto=format&fit=crop&q=80',
-    originalPrice: 1599,
+    originalPrice: 599,
     year: 2024,
+    seats: 5,
     specs: {
-      horsepower: 563,
-      acceleration: '4.8s 0-60',
+      horsepower: 523,
+      acceleration: '5.2s 0-60',
       topSpeed: '155 mph',
       transmission: '8-Speed Auto',
     },
-    features: ['Unlimited Miles', 'Full Insurance', 'Chauffeur Optional', 'Starlight Headliner'],
+    features: ['Unlimited Miles', 'Full Insurance', 'Luxury Interior', 'Premium Sound'],
     minAge: 25,
     insuranceRequired: '$300k liability minimum',
   },
@@ -63,6 +66,7 @@ export const vehicles: Vehicle[] = [
     image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&auto=format&fit=crop&q=80',
     originalPrice: 2499,
     year: 2024,
+    seats: 2,
     specs: {
       horsepower: 710,
       acceleration: '2.9s 0-60',
@@ -81,6 +85,7 @@ export const vehicles: Vehicle[] = [
     image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1899,
     year: 2024,
+    seats: 2,
     specs: {
       horsepower: 710,
       acceleration: '2.8s 0-60',
@@ -99,6 +104,7 @@ export const vehicles: Vehicle[] = [
     image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1499,
     year: 2024,
+    seats: 2,
     specs: {
       horsepower: 640,
       acceleration: '2.6s 0-60',
@@ -117,6 +123,7 @@ export const vehicles: Vehicle[] = [
     image: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1399,
     year: 2024,
+    seats: 2,
     specs: {
       horsepower: 650,
       acceleration: '3.5s 0-60',
@@ -126,6 +133,44 @@ export const vehicles: Vehicle[] = [
     features: ['Unlimited Miles', 'Full Insurance', 'Massage Seats', 'Rotating Display'],
     minAge: 25,
     insuranceRequired: '$300k liability minimum',
+  },
+  {
+    id: '7',
+    brand: 'Mercedes-Benz',
+    model: 'G63 AMG',
+    type: 'suv',
+    image: 'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=800&auto=format&fit=crop&q=80',
+    originalPrice: 899,
+    year: 2024,
+    seats: 5,
+    specs: {
+      horsepower: 577,
+      acceleration: '4.5s 0-60',
+      topSpeed: '137 mph',
+      transmission: '9-Speed Auto',
+    },
+    features: ['Unlimited Miles', 'Full Insurance', 'Luxury Interior', 'Off-Road Ready'],
+    minAge: 25,
+    insuranceRequired: '$300k liability minimum',
+  },
+  {
+    id: '8',
+    brand: 'Lamborghini',
+    model: 'Urus',
+    type: 'suv',
+    image: 'https://images.unsplash.com/photo-1669923206059-8add7e2b5b53?w=800&auto=format&fit=crop&q=80',
+    originalPrice: 1299,
+    year: 2024,
+    seats: 5,
+    specs: {
+      horsepower: 657,
+      acceleration: '3.6s 0-60',
+      topSpeed: '190 mph',
+      transmission: '8-Speed Auto',
+    },
+    features: ['200 Miles/Day', 'Full Insurance', 'Sport Exhaust', 'Track Mode'],
+    minAge: 25,
+    insuranceRequired: '$400k liability minimum',
   },
 ];
 

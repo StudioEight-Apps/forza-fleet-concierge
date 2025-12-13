@@ -14,14 +14,14 @@ const LocationHeader = ({ location, onLocationChange }: LocationHeaderProps) => 
             <span className="text-lg font-light text-muted-foreground ml-1">EXOTICS</span>
           </div>
           
-          {/* Location Tabs - Centered below */}
+          {/* Location Tabs - Centered below with green accent */}
           <div className="flex bg-secondary rounded-full p-0.5">
             <button
               onClick={() => onLocationChange?.('Miami')}
               className={`px-4 py-1 rounded-full text-xs font-medium transition-all ${
                 location === 'Miami' 
-                  ? 'bg-background text-foreground shadow-sm' 
-                  : 'text-muted-foreground'
+                  ? 'bg-primary text-primary-foreground shadow-sm' 
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               Miami
@@ -30,8 +30,8 @@ const LocationHeader = ({ location, onLocationChange }: LocationHeaderProps) => 
               onClick={() => onLocationChange?.('Fort Lauderdale')}
               className={`px-4 py-1 rounded-full text-xs font-medium transition-all ${
                 location === 'Fort Lauderdale' 
-                  ? 'bg-background text-foreground shadow-sm' 
-                  : 'text-muted-foreground'
+                  ? 'bg-primary text-primary-foreground shadow-sm' 
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               Ft. Lauderdale

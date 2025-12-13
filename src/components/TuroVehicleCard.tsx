@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Vehicle } from '@/data/vehicles';
-import { Star } from 'lucide-react';
+import { Star, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 
@@ -55,9 +55,15 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
               </div>
             </div>
             
-            {/* Year and Price on same line */}
+            {/* Year, Seats and Price on same line */}
             <div className="flex items-center justify-between mt-0.5">
-              <span className="text-xs text-muted-foreground">{vehicle.year}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">{vehicle.year}</span>
+                <div className="flex items-center gap-0.5 text-muted-foreground">
+                  <User className="h-3 w-3" />
+                  <span className="text-xs">{vehicle.seats}</span>
+                </div>
+              </div>
               <span className="text-sm font-bold text-primary">
                 ${price}<span className="font-normal text-muted-foreground text-xs">/day</span>
               </span>
