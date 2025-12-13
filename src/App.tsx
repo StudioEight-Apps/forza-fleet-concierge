@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import VehicleDetail from "./pages/VehicleDetail";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
+import Favorites from "./pages/Favorites";
+import Trips from "./pages/Trips";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/vehicle/:id" element={<VehicleDetail />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/trips" element={<Trips />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

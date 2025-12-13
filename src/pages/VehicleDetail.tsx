@@ -1,14 +1,13 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Gauge, Clock, Settings, Shield, CheckCircle2 } from 'lucide-react';
-import Header from '@/components/Header';
-import BottomNav from '@/components/BottomNav';
+import { ArrowLeft, Star, Calendar, MapPin, Share, Heart } from 'lucide-react';
+import IOSBottomNav from '@/components/IOSBottomNav';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { getVehicleById } from '@/data/vehicles';
 
 const VehicleDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const vehicle = getVehicleById(id || '');
 
   if (!vehicle) {
@@ -17,153 +16,150 @@ const VehicleDetail = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Vehicle not found</h1>
           <Link to="/">
-            <Button variant="default">Back to Fleet</Button>
+            <Button>Back to Search</Button>
           </Link>
         </div>
       </div>
     );
   }
 
-  const hasSale = !!vehicle.salePrice;
-  const specs = [
-    { icon: Zap, label: 'Horsepower', value: `${vehicle.specs.horsepower} HP` },
-    { icon: Clock, label: '0-60 mph', value: vehicle.specs.acceleration },
-    { icon: Gauge, label: 'Top Speed', value: vehicle.specs.topSpeed },
-    { icon: Settings, label: 'Transmission', value: vehicle.specs.transmission },
-  ];
+  const price = vehicle.salePrice || vehicle.originalPrice;
+  const rating = 4.85;
+  const trips = 47;
 
   return (
-    <div className="min-h-screen bg-background pb-32 md:pb-20">
-      <Header />
+    <div className="min-h-screen bg-background pb-40">
+      {/* iOS Navigation Bar */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border safe-area-top">
+        <div className="flex items-center justify-between px-4 h-14">
+          <button onClick={() => navigate(-1)} className="p-2 -ml-2">
+            <ArrowLeft className="h-6 w-6" />
+          </button>
+          <h1 className="font-semibold">{vehicle.brand.toUpperCase()} {vehicle.model.toUpperCase()}</h1>
+          <div className="flex items-center gap-2">
+            <button className="p-2">
+              <Share className="h-5 w-5" />
+            </button>
+            <button className="p-2 -mr-2">
+              <Heart className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
 
-      <main className="pt-20">
+      <main className="pt-14">
         {/* Hero Image */}
-        <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
+        <div className="relative aspect-[4/3] bg-secondary">
           <img
             src={vehicle.image}
             alt={`${vehicle.brand} ${vehicle.model}`}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-          
-          {/* Back Button */}
-          <Link
-            to="/"
-            className="absolute top-24 left-4 glass rounded-full p-3 hover:bg-card/90 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Link>
-
-          {/* Sale Badge */}
-          {hasSale && (
-            <Badge className="absolute top-24 right-4 bg-highlight text-highlight-foreground font-bold text-base px-4 py-2">
-              <Zap className="h-4 w-4 mr-2" />
-              ON SALE
-            </Badge>
-          )}
+          {/* Image counter */}
+          <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-medium">
+            1 of 10
+          </div>
         </div>
 
         {/* Content */}
-        <div className="container mx-auto px-4 -mt-32 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="glass rounded-3xl p-6 sm:p-8"
-          >
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
-              <div>
-                <p className="text-primary font-medium uppercase tracking-widest text-sm mb-1">
-                  {vehicle.brand}
-                </p>
-                <h1 className="font-display text-4xl sm:text-5xl font-bold">
-                  {vehicle.model}
-                </h1>
-                <p className="text-muted-foreground mt-2">{vehicle.year} Model</p>
-              </div>
-              <div className="text-left sm:text-right">
-                {hasSale ? (
-                  <>
-                    <p className="text-muted-foreground line-through text-lg">
-                      ${vehicle.originalPrice}/day
-                    </p>
-                    <p className="text-highlight text-3xl sm:text-4xl font-bold">
-                      ${vehicle.salePrice}
-                      <span className="text-lg font-normal">/day</span>
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-foreground text-3xl sm:text-4xl font-bold">
-                    ${vehicle.originalPrice}
-                    <span className="text-lg font-normal text-muted-foreground">/day</span>
-                  </p>
-                )}
+        <div className="px-4 py-6">
+          {/* Owner & Title */}
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-muted-foreground text-sm mb-1">Forza Exotic</p>
+              <h2 className="text-2xl font-bold">
+                {vehicle.brand.toUpperCase()} {vehicle.model.toUpperCase()} {vehicle.year}
+              </h2>
+              {/* Rating */}
+              <div className="flex items-center gap-2 mt-2">
+                <Star className="h-4 w-4 fill-foreground text-foreground" />
+                <span className="font-medium">{rating}</span>
+                <span className="text-muted-foreground">• {trips} trips</span>
               </div>
             </div>
+            
+            {/* Price */}
+            <div className="text-right">
+              <p className="text-2xl font-bold">${price}</p>
+              <p className="text-muted-foreground text-sm">per day</p>
+            </div>
+          </div>
 
-            {/* Specs Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-              {specs.map((spec) => (
-                <div
-                  key={spec.label}
-                  className="bg-secondary/50 rounded-xl p-4 text-center"
-                >
-                  <spec.icon className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">
-                    {spec.label}
-                  </p>
-                  <p className="font-semibold">{spec.value}</p>
+          {/* Trip Dates */}
+          <div className="bg-secondary rounded-xl p-4 mb-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Calendar className="h-5 w-5 text-muted-foreground" />
+                <div>
+                  <p className="font-medium text-sm">TRIP DATES</p>
+                  <p className="text-muted-foreground text-sm">Mon, Jan 9 at 9:00 AM</p>
+                  <p className="text-muted-foreground text-sm">Mon, Jan 16 at 9:00 AM</p>
+                </div>
+              </div>
+              <button className="text-primary font-medium text-sm">Change &gt;</button>
+            </div>
+          </div>
+
+          {/* Pickup Location */}
+          <div className="bg-secondary rounded-xl p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-muted-foreground" />
+                <div>
+                  <p className="font-medium text-sm">PICKUP & RETURN</p>
+                  <p className="text-muted-foreground text-sm">Miami, FL</p>
+                </div>
+              </div>
+              <button className="text-primary font-medium text-sm">Change &gt;</button>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2">DESCRIPTION</h3>
+            <p className="text-muted-foreground">
+              Experience the ultimate in luxury and performance with this {vehicle.year} {vehicle.brand} {vehicle.model}. 
+              Featuring {vehicle.specs.horsepower} horsepower, {vehicle.specs.acceleration} 0-60, and a top speed of {vehicle.specs.topSpeed}.
+            </p>
+          </div>
+
+          {/* Features */}
+          <div className="mb-6">
+            <h3 className="font-semibold mb-3">FEATURES</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {vehicle.features.slice(0, 6).map((feature) => (
+                <div key={feature} className="bg-secondary rounded-lg px-3 py-2 text-sm">
+                  {feature}
                 </div>
               ))}
             </div>
+          </div>
 
-            {/* Features */}
-            <div className="mb-8">
-              <h3 className="font-display text-xl font-semibold mb-4">Included</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {vehicle.features.map((feature) => (
-                  <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
+          {/* Requirements */}
+          <div className="bg-muted/50 rounded-xl p-4">
+            <h3 className="font-semibold mb-3">REQUIREMENTS</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Minimum Age</span>
+                <span>{vehicle.minAge}+ years</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Insurance</span>
+                <span>{vehicle.insuranceRequired}</span>
               </div>
             </div>
-
-            {/* Requirements */}
-            <div className="bg-secondary/30 rounded-xl p-5 mb-8">
-              <div className="flex items-center gap-3 mb-3">
-                <Shield className="h-5 w-5 text-primary" />
-                <h3 className="font-display text-lg font-semibold">Requirements</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-muted-foreground">Minimum Age</p>
-                  <p className="font-medium">{vehicle.minAge}+ years old</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Insurance</p>
-                  <p className="font-medium">{vehicle.insuranceRequired}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="premium" size="xl" className="flex-1">
-                Reserve Now
-              </Button>
-              <Link to="/chat" className="flex-1">
-                <Button variant="outline" size="xl" className="w-full">
-                  Ask Concierge
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </main>
 
-      <BottomNav />
+      {/* Fixed Bottom CTA */}
+      <div className="fixed bottom-16 left-0 right-0 bg-card border-t border-border p-4 safe-area-bottom">
+        <Button className="w-full h-14 text-lg font-semibold">
+          Go to checkout
+        </Button>
+      </div>
+
+      <IOSBottomNav />
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Bot, User, Sparkles } from 'lucide-react';
-import Header from '@/components/Header';
-import BottomNav from '@/components/BottomNav';
+import { Send, ArrowLeft, Phone, MoreVertical } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import IOSBottomNav from '@/components/IOSBottomNav';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -10,21 +10,17 @@ interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  time: string;
 }
 
-const quickQuestions = [
-  "What's the minimum age to rent?",
-  "Do you offer delivery?",
-  "What insurance do I need?",
-  "Can I extend my rental?",
-];
-
 const Chat = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'assistant',
-      content: "Welcome to Forza Exotic Rentals! I'm your AI concierge, here to help you find the perfect exotic car. What would you like to know?",
+      content: "Hi! I'm your Forza concierge. How can I help you with your exotic car rental today?",
+      time: '12:40 pm',
     },
   ]);
   const [input, setInput] = useState('');
@@ -39,6 +35,14 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
+  const getCurrentTime = () => {
+    return new Date().toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true 
+    }).toLowerCase();
+  };
+
   const handleSend = async (text: string = input) => {
     if (!text.trim()) return;
 
@@ -46,28 +50,26 @@ const Chat = () => {
       id: Date.now().toString(),
       role: 'user',
       content: text,
+      time: getCurrentTime(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI response (replace with actual AI integration)
     setTimeout(() => {
       const responses: Record<string, string> = {
         "What's the minimum age to rent?":
-          "The minimum age varies by vehicle:\n\n• Luxury SUVs (Urus, Cullinan): 25 years\n• Sports Cars (Ferrari, McLaren): 28-30 years\n\nA valid driver's license and clean driving record are required for all rentals.",
+          "For our luxury SUVs like the Urus and Cullinan, minimum age is 25. For supercars like Ferrari and McLaren, it's 28-30 years.",
         "Do you offer delivery?":
-          "Yes! We offer complimentary delivery within Miami-Dade County for rentals of 3+ days. For shorter rentals or deliveries outside our primary area, a small fee applies. We can deliver to your home, hotel, or the airport.",
+          "Yes! Free delivery within Miami-Dade for 3+ day rentals. Airport pickup available too!",
         "What insurance do I need?":
-          "We require:\n\n• $300k minimum liability for SUVs\n• $400-500k minimum liability for sports cars\n\nWe also offer comprehensive insurance add-ons starting at $150/day for complete peace of mind.",
-        "Can I extend my rental?":
-          "Absolutely! Subject to availability, you can extend your rental anytime. Just contact us 24 hours before your scheduled return. Extensions are charged at the same daily rate.",
+          "$300k minimum liability for SUVs, $400-500k for supercars. We also offer add-on coverage starting at $150/day.",
       };
 
       const response =
         responses[text] ||
-        "I'd be happy to help with that! For specific pricing and availability, I recommend checking our fleet page or calling our team directly at (305) 555-FORZA. Is there anything else you'd like to know about our exotic vehicles?";
+        "Sure, no problem. Have a great time! Let me know if you need anything else.";
 
       setMessages((prev) => [
         ...prev,
@@ -75,144 +77,129 @@ const Chat = () => {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
           content: response,
+          time: getCurrentTime(),
         },
       ]);
       setIsTyping(false);
-    }, 1500);
+    }, 1200);
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Header />
-
-      <main className="flex-1 pt-20 pb-32 md:pb-20 flex flex-col">
-        {/* Chat Header */}
-        <div className="glass border-b border-border">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                <Bot className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="font-display text-xl font-semibold">AI Concierge</h1>
-                <p className="text-muted-foreground text-sm flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  Always available
-                </p>
-              </div>
+    <div className="min-h-screen bg-background flex flex-col pb-16">
+      {/* iOS Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border safe-area-top">
+        <div className="flex items-center justify-between px-4 h-14">
+          <button onClick={() => navigate(-1)} className="p-2 -ml-2">
+            <ArrowLeft className="h-6 w-6" />
+          </button>
+          
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold">F</span>
+            </div>
+            <div>
+              <h1 className="font-semibold">Forza Concierge</h1>
+              <p className="text-xs text-muted-foreground">Confirmed trip</p>
             </div>
           </div>
-        </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="container mx-auto px-4 py-6 space-y-6">
-            <AnimatePresence>
-              {messages.map((message) => (
-                <motion.div
-                  key={message.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className={`flex gap-3 ${
-                    message.role === 'user' ? 'flex-row-reverse' : ''
+          <div className="flex items-center gap-1">
+            <button className="p-2 rounded-full bg-primary/10">
+              <Phone className="h-5 w-5 text-primary" />
+            </button>
+            <button className="p-2">
+              <MoreVertical className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Messages */}
+      <main className="flex-1 pt-20 pb-20 overflow-y-auto">
+        <div className="px-4 py-4 space-y-4">
+          <AnimatePresence>
+            {messages.map((message) => (
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    message.role === 'user'
+                      ? 'bg-primary text-primary-foreground rounded-br-sm'
+                      : 'bg-secondary text-secondary-foreground rounded-bl-sm'
                   }`}
                 >
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      message.role === 'user'
-                        ? 'bg-secondary'
-                        : 'bg-primary/20'
-                    }`}
-                  >
-                    {message.role === 'user' ? (
-                      <User className="h-4 w-4" />
-                    ) : (
-                      <Bot className="h-4 w-4 text-primary" />
-                    )}
-                  </div>
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      message.role === 'user'
-                        ? 'bg-secondary text-secondary-foreground'
-                        : 'glass'
-                    }`}
-                  >
-                    <p className="whitespace-pre-wrap">{message.content}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {isTyping && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex gap-3"
-              >
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Bot className="h-4 w-4 text-primary" />
+                  <p>{message.content}</p>
                 </div>
-                <div className="glass rounded-2xl px-4 py-3">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
+                <span className="text-xs text-muted-foreground mt-1 px-1">
+                  {message.time}
+                </span>
               </motion.div>
-            )}
+            ))}
+          </AnimatePresence>
 
-            <div ref={messagesEndRef} />
-          </div>
-        </div>
-
-        {/* Quick Questions */}
-        {messages.length === 1 && (
-          <div className="container mx-auto px-4 pb-4">
-            <p className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
-              Quick questions
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {quickQuestions.map((question) => (
-                <button
-                  key={question}
-                  onClick={() => handleSend(question)}
-                  className="glass glass-hover px-4 py-2 rounded-full text-sm"
-                >
-                  {question}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Input */}
-        <div className="glass border-t border-border">
-          <div className="container mx-auto px-4 py-4">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSend();
-              }}
-              className="flex gap-3"
+          {isTyping && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-start"
             >
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about our fleet..."
-                className="flex-1 bg-secondary border-0 h-12"
-              />
-              <Button type="submit" size="icon" className="h-12 w-12">
-                <Send className="h-5 w-5" />
-              </Button>
-            </form>
-          </div>
+              <div className="bg-secondary rounded-2xl rounded-bl-sm px-4 py-3">
+                <div className="flex gap-1">
+                  <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          <div ref={messagesEndRef} />
         </div>
       </main>
 
-      <BottomNav />
+      {/* Quick Actions (first message only) */}
+      {messages.length === 1 && (
+        <div className="px-4 pb-4">
+          <div className="flex flex-wrap gap-2">
+            {["What's the minimum age to rent?", "Do you offer delivery?", "What insurance do I need?"].map((q) => (
+              <button
+                key={q}
+                onClick={() => handleSend(q)}
+                className="bg-secondary px-3 py-2 rounded-full text-sm"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Input */}
+      <div className="fixed bottom-16 left-0 right-0 bg-card border-t border-border p-3">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSend();
+          }}
+          className="flex gap-2"
+        >
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Write a message..."
+            className="flex-1 bg-secondary border-0 h-11 rounded-full px-4"
+          />
+          <Button type="submit" size="icon" className="h-11 w-11 rounded-full">
+            <Send className="h-5 w-5" />
+          </Button>
+        </form>
+      </div>
+
+      <IOSBottomNav />
     </div>
   );
 };
