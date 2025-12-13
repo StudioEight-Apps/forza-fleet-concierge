@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { User, Mail, Phone, CreditCard, FileText, LogOut, ChevronRight, Sparkles, Settings } from 'lucide-react';
+import { User, Mail, Phone, CreditCard, FileText, LogOut, ChevronRight, Settings } from 'lucide-react';
 import IOSBottomNav from '@/components/IOSBottomNav';
 import { Button } from '@/components/ui/button';
 
@@ -37,27 +37,6 @@ const Profile = () => {
             <p className="text-muted-foreground text-sm">Sign in to access your account</p>
           </motion.div>
 
-          {/* Promo Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-secondary rounded-2xl p-5 mb-5"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-4 w-4 text-highlight" />
-              <span className="text-highlight font-semibold text-sm">New Member Offer</span>
-            </div>
-            <h3 className="text-lg font-semibold mb-1">
-              Get 15% Off Your First Rental
-            </h3>
-            <p className="text-muted-foreground text-sm mb-4">
-              Create an account and use code FORZA15
-            </p>
-            <Button className="w-full h-12">
-              Sign Up Now
-            </Button>
-          </motion.div>
 
           {/* Menu */}
           <motion.div

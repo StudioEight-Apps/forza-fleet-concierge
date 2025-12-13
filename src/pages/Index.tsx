@@ -5,7 +5,7 @@ import LocationHeader from '@/components/LocationHeader';
 import TuroVehicleCard from '@/components/TuroVehicleCard';
 import IOSBottomNav from '@/components/IOSBottomNav';
 import FilterSheet from '@/components/FilterSheet';
-import PromoBanner from '@/components/PromoBanner';
+
 import { getVehiclesByType } from '@/data/vehicles';
 
 type FilterType = 'all' | 'suv' | 'sports';
@@ -24,8 +24,6 @@ const Index = () => {
       />
       
       <main className="pt-[68px]">
-        <PromoBanner />
-
         {/* Category Pills - Airbnb style */}
         <div className="sticky top-[76px] z-40 bg-background border-b border-border">
           <div className="px-4 py-3 flex items-center gap-3 overflow-x-auto">
