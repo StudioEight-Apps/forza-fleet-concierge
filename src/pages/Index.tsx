@@ -13,13 +13,14 @@ type FilterType = 'all' | 'suv' | 'sports';
 const Index = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [location, setLocation] = useState('Miami');
   const vehicles = getVehiclesByType(activeFilter);
 
   return (
     <div className="min-h-screen bg-background pb-24">
       <LocationHeader 
-        location="Miami, FL"
-        dates="Jan 9, 9:00 AM – Jan 16, 9:00 AM"
+        location={location}
+        onLocationChange={setLocation}
       />
       
       <main className="pt-[76px]">
