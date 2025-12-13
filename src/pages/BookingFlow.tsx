@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { X, Star, ChevronDown } from 'lucide-react';
+import ApplePaySheet from '@/components/ApplePaySheet';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { getVehicleById } from '@/data/vehicles';
@@ -32,6 +33,7 @@ const BookingFlow = () => {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [pickupTime, setPickupTime] = useState('8 AM');
   const [returnTime, setReturnTime] = useState('8 AM');
+  const [showPaymentSheet, setShowPaymentSheet] = useState(false);
 
   if (!vehicle) {
     navigate('/');
@@ -307,12 +309,23 @@ const BookingFlow = () => {
 
           {/* Bottom Bar */}
           <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 safe-area-bottom">
-            <Button className="w-full h-14 text-lg font-semibold">
+            <Button 
+              onClick={() => setShowPaymentSheet(true)}
+              className="w-full h-14 text-lg font-semibold"
+            >
               Reserve Now
             </Button>
           </div>
         </motion.div>
       )}
+
+      {/* Apple Pay Sheet */}
+      <ApplePaySheet
+        isOpen={showPaymentSheet}
+        onClose={() => setShowPaymentSheet(false)}
+        amount={250}
+        vehicleName={`${vehicle.brand} ${vehicle.model}`}
+      />
     </div>
   );
 };
