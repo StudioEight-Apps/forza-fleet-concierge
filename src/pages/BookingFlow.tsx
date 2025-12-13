@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { X, Star, ChevronDown } from 'lucide-react';
 import ApplePaySheet from '@/components/ApplePaySheet';
+import ConfettiCelebration from '@/components/ConfettiCelebration';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { getVehicleById } from '@/data/vehicles';
 import { format, differenceInDays, addDays } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useBookings } from '@/hooks/useBookings';
 import {
   Select,
   SelectContent,
@@ -27,6 +29,7 @@ const BookingFlow = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const vehicle = getVehicleById(id || '');
+  const { addBooking } = useBookings();
   
   const [step, setStep] = useState<BookingStep>('dates');
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -34,6 +37,7 @@ const BookingFlow = () => {
   const [pickupTime, setPickupTime] = useState('8 AM');
   const [returnTime, setReturnTime] = useState('8 AM');
   const [showPaymentSheet, setShowPaymentSheet] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   if (!vehicle) {
     navigate('/');
@@ -322,9 +326,34 @@ const BookingFlow = () => {
       {/* Apple Pay Sheet */}
       <ApplePaySheet
         isOpen={showPaymentSheet}
-        onClose={() => setShowPaymentSheet(false)}
+        onClose={() => {
+          setShowPaymentSheet(false);
+          // Add booking and show celebration
+          if (startDate && endDate) {
+            addBooking({
+              vehicleId: id || '',
+              vehicleBrand: vehicle.brand,
+              vehicleModel: vehicle.model,
+              vehicleYear: vehicle.year,
+              vehicleImage: vehicle.image,
+              startDate: startDate.toISOString(),
+              endDate: endDate.toISOString(),
+              pickupTime,
+              returnTime,
+              totalPrice: total,
+              depositPaid: 250
+            });
+            setShowCelebration(true);
+          }
+        }}
         amount={250}
         vehicleName={`${vehicle.brand} ${vehicle.model}`}
+      />
+
+      {/* Confetti Celebration */}
+      <ConfettiCelebration
+        isVisible={showCelebration}
+        onComplete={() => navigate('/trips')}
       />
     </div>
   );
