@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SlidersHorizontal, Map } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import LocationHeader from '@/components/LocationHeader';
 import TuroVehicleCard from '@/components/TuroVehicleCard';
 import IOSBottomNav from '@/components/IOSBottomNav';
@@ -25,23 +25,42 @@ const Index = () => {
       <main className="pt-[76px]">
         <PromoBanner />
 
-        {/* Filter Bar */}
+        {/* Category Pills - Airbnb style */}
         <div className="sticky top-[76px] z-40 bg-background border-b border-border">
-          <div className="px-4 py-3 flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-secondary rounded-full text-sm font-medium">
-              <Map className="h-4 w-4" />
-              Map
+          <div className="px-4 py-3 flex items-center gap-3 overflow-x-auto">
+            <button 
+              onClick={() => setActiveFilter('all')}
+              className={`flex flex-col items-center gap-1 px-4 py-2 text-xs font-medium whitespace-nowrap ${
+                activeFilter === 'all' ? 'text-foreground border-b-2 border-foreground' : 'text-muted-foreground'
+              }`}
+            >
+              All Cars
             </button>
+            <button 
+              onClick={() => setActiveFilter('suv')}
+              className={`flex flex-col items-center gap-1 px-4 py-2 text-xs font-medium whitespace-nowrap ${
+                activeFilter === 'suv' ? 'text-foreground border-b-2 border-foreground' : 'text-muted-foreground'
+              }`}
+            >
+              SUVs
+            </button>
+            <button 
+              onClick={() => setActiveFilter('sports')}
+              className={`flex flex-col items-center gap-1 px-4 py-2 text-xs font-medium whitespace-nowrap ${
+                activeFilter === 'sports' ? 'text-foreground border-b-2 border-foreground' : 'text-muted-foreground'
+              }`}
+            >
+              Sports
+            </button>
+            
+            <div className="flex-1" />
             
             <button 
               onClick={() => setIsFilterOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-secondary rounded-full text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border text-sm font-medium"
             >
               <SlidersHorizontal className="h-4 w-4" />
               Filters
-              <span className="bg-primary text-primary-foreground text-xs px-1.5 py-0.5 rounded-full ml-1">
-                2
-              </span>
             </button>
           </div>
         </div>
