@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Vehicle } from '@/data/vehicles';
-import { Star, Zap } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface TuroVehicleCardProps {
@@ -9,8 +9,7 @@ interface TuroVehicleCardProps {
 }
 
 const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
-  const hasSale = !!vehicle.salePrice;
-  const price = vehicle.salePrice || vehicle.originalPrice;
+  const price = vehicle.originalPrice;
   
   // Simulate rating for demo
   const rating = 4.8 + (Math.random() * 0.2);
@@ -30,16 +29,6 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
               alt={`${vehicle.brand} ${vehicle.model}`}
               className="w-full h-full object-cover"
             />
-            
-            {/* Badges */}
-            <div className="absolute top-3 left-3 flex gap-2">
-              {hasSale && (
-                <span className="bg-highlight text-highlight-foreground px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1">
-                  <Zap className="h-3 w-3" />
-                  SALE
-                </span>
-              )}
-            </div>
 
             {/* Heart icon like Airbnb */}
             <button className="absolute top-3 right-3 p-2">
@@ -66,14 +55,9 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
               </div>
             </div>
             
-            {/* Price - Airbnb style */}
-            <div className="mt-1 flex items-baseline gap-1.5">
-              {hasSale && (
-                <span className="text-muted-foreground text-[15px] line-through">
-                  ${vehicle.originalPrice}
-                </span>
-              )}
-              <span className={`text-[15px] ${hasSale ? 'font-semibold' : ''} text-foreground`}>
+            {/* Price */}
+            <div className="mt-1">
+              <span className="text-[15px] text-foreground">
                 <span className="font-semibold">${price}</span> day
               </span>
             </div>
