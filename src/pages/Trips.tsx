@@ -69,12 +69,12 @@ const Trips = () => {
 
                         <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
                           <MapPin className="h-4 w-4" />
-                          <span>Miami, FL</span>
+                          <span>601 Biscayne Boulevard, Miami, FL 33132</span>
                         </div>
 
                         <div className="flex items-center justify-between pt-3 border-t border-border">
                           <div>
-                            <p className="text-sm text-muted-foreground">Total</p>
+                            <p className="text-sm text-muted-foreground">Total due</p>
                             <p className="font-semibold">${booking.totalPrice.toLocaleString()}</p>
                           </div>
                           <div className="bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium">
