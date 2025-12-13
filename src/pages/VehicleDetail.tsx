@@ -154,9 +154,21 @@ const VehicleDetail = () => {
 
       {/* Fixed Bottom CTA */}
       <div className="fixed bottom-16 left-0 right-0 bg-card border-t border-border p-4 safe-area-bottom">
-        <Button className="w-full h-14 text-lg font-semibold">
-          Reserve
-        </Button>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-muted-foreground text-sm">Add dates for prices</p>
+            <div className="flex items-center gap-1">
+              <Star className="h-4 w-4 fill-primary text-primary" />
+              <span className="font-medium">{rating}</span>
+            </div>
+          </div>
+          <Button 
+            onClick={() => navigate(`/booking/${id}`)}
+            className="h-12 px-6 font-semibold"
+          >
+            Check availability
+          </Button>
+        </div>
       </div>
 
       <IOSBottomNav />
