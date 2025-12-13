@@ -23,10 +23,9 @@ export const vehicles: Vehicle[] = [
     id: '1',
     brand: 'Bugatti',
     model: 'Chiron',
-    type: 'suv',
+    type: 'sports',
     image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1299,
-    salePrice: 1099,
     year: 2024,
     specs: {
       horsepower: 789,
@@ -45,7 +44,6 @@ export const vehicles: Vehicle[] = [
     type: 'suv',
     image: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1599,
-    salePrice: 1399,
     year: 2024,
     specs: {
       horsepower: 563,
@@ -64,7 +62,6 @@ export const vehicles: Vehicle[] = [
     type: 'sports',
     image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&auto=format&fit=crop&q=80',
     originalPrice: 2499,
-    salePrice: 2199,
     year: 2024,
     specs: {
       horsepower: 710,
@@ -83,7 +80,6 @@ export const vehicles: Vehicle[] = [
     type: 'sports',
     image: 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1899,
-    salePrice: 1699,
     year: 2024,
     specs: {
       horsepower: 710,
@@ -120,7 +116,6 @@ export const vehicles: Vehicle[] = [
     type: 'sports',
     image: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&auto=format&fit=crop&q=80',
     originalPrice: 1399,
-    salePrice: 1199,
     year: 2024,
     specs: {
       horsepower: 650,
