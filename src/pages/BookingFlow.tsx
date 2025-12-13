@@ -1,14 +1,26 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { X, Star, ChevronRight } from 'lucide-react';
+import { X, Star, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { getVehicleById } from '@/data/vehicles';
 import { format, differenceInDays, addDays } from 'date-fns';
 import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type BookingStep = 'dates' | 'review';
+
+const timeOptions = [
+  '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', 
+  '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM'
+];
 
 const BookingFlow = () => {
   const { id } = useParams();
@@ -18,6 +30,8 @@ const BookingFlow = () => {
   const [step, setStep] = useState<BookingStep>('dates');
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+  const [pickupTime, setPickupTime] = useState('8 AM');
+  const [returnTime, setReturnTime] = useState('8 AM');
 
   if (!vehicle) {
     navigate('/');
@@ -80,12 +94,12 @@ const BookingFlow = () => {
           <h1 className="text-2xl font-bold mb-1">Select dates</h1>
           <p className="text-muted-foreground mb-6">
             {startDate ? format(startDate, 'EEE, MMM d') : 'Start date'} 
-            {' - '}
+            {' – '}
             {endDate ? format(endDate, 'EEE, MMM d') : 'End date'}
           </p>
 
-          {/* Calendar */}
-          <div className="flex justify-center">
+          {/* Calendar - Larger */}
+          <div className="flex justify-center mb-8">
             <Calendar
               mode="single"
               selected={endDate || startDate}
@@ -103,9 +117,62 @@ const BookingFlow = () => {
                 range_end: { backgroundColor: 'hsl(var(--foreground))', color: 'hsl(var(--background))', borderRadius: '50%' },
                 range_middle: { backgroundColor: 'hsl(var(--secondary))', borderRadius: '0' },
               }}
-              className="p-3 pointer-events-auto"
+              className="p-4 pointer-events-auto scale-110 origin-top"
               numberOfMonths={1}
             />
+          </div>
+
+          {/* Pick-Up & Return Time Selection - Matching Forza Website */}
+          <div className="space-y-4 mt-8">
+            {/* Pick-Up Section */}
+            <div className="border border-border rounded-lg">
+              <div className="grid grid-cols-2 divide-x divide-border">
+                <div className="p-4">
+                  <p className="text-xs text-muted-foreground mb-1">Pick-Up Date *</p>
+                  <p className="font-medium">
+                    {startDate ? format(startDate, 'MMM d, yyyy') : 'Start Date'}
+                  </p>
+                </div>
+                <div className="p-4">
+                  <p className="text-xs text-muted-foreground mb-1">Pick-Up Time*</p>
+                  <Select value={pickupTime} onValueChange={setPickupTime}>
+                    <SelectTrigger className="border-0 p-0 h-auto font-medium shadow-none">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {timeOptions.map((time) => (
+                        <SelectItem key={time} value={time}>{time}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Return Section */}
+            <div className="border border-border rounded-lg">
+              <div className="grid grid-cols-2 divide-x divide-border">
+                <div className="p-4">
+                  <p className="text-xs text-muted-foreground mb-1">Return Date*</p>
+                  <p className="font-medium">
+                    {endDate ? format(endDate, 'MMM d, yyyy') : 'End Date'}
+                  </p>
+                </div>
+                <div className="p-4">
+                  <p className="text-xs text-muted-foreground mb-1">Return Time*</p>
+                  <Select value={returnTime} onValueChange={setReturnTime}>
+                    <SelectTrigger className="border-0 p-0 h-auto font-medium shadow-none">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {timeOptions.map((time) => (
+                        <SelectItem key={time} value={time}>{time}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Bottom Bar */}
