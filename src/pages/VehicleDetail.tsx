@@ -155,7 +155,7 @@ const VehicleDetail = () => {
       {/* Fixed Bottom CTA */}
       <div className="fixed bottom-16 left-0 right-0 bg-card border-t border-border p-4 safe-area-bottom">
         <Button className="w-full h-14 text-lg font-semibold">
-          Go to checkout
+          Reserve
         </Button>
       </div>
 
