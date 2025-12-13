@@ -71,7 +71,7 @@ const BookingFlow = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background border-b border-border safe-area-top">
         <div className="flex items-center justify-between px-4 h-14">
-          <button onClick={() => navigate(`/vehicle/${id}`)} className="p-2 -ml-2">
+          <button onClick={() => navigate(step === 'dates' ? `/vehicle/${id}` : '/')} className="p-2 -ml-2">
             <X className="h-6 w-6" />
           </button>
           {step === 'dates' && (

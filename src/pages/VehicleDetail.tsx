@@ -32,7 +32,7 @@ const VehicleDetail = () => {
       {/* iOS Navigation Bar */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border safe-area-top">
         <div className="flex items-center justify-between px-4 h-14">
-          <button onClick={() => navigate(-1)} className="p-2 -ml-2">
+          <button onClick={() => navigate('/')} className="p-2 -ml-2">
             <ArrowLeft className="h-6 w-6" />
           </button>
           <h1 className="font-semibold">{vehicle.brand.toUpperCase()} {vehicle.model.toUpperCase()}</h1>
