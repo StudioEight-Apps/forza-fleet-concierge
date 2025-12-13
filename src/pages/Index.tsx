@@ -23,7 +23,7 @@ const Index = () => {
         onLocationChange={setLocation}
       />
       
-      <main className="pt-[76px]">
+      <main className="pt-[68px]">
         <PromoBanner />
 
         {/* Category Pills - Airbnb style */}

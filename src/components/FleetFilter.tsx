@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Car, Truck } from 'lucide-react';
 
 type FilterType = 'all' | 'suv' | 'sports';
@@ -21,23 +20,14 @@ const FleetFilter = ({ activeFilter, onFilterChange }: FleetFilterProps) => {
         <button
           key={filter.type}
           onClick={() => onFilterChange(filter.type)}
-          className={`relative px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+          className={`relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 flex items-center gap-1.5 ${
             activeFilter === filter.type
-              ? 'text-primary-foreground'
-              : 'text-muted-foreground hover:text-foreground glass glass-hover'
+              ? 'bg-primary text-primary-foreground shadow-sm'
+              : 'bg-secondary text-muted-foreground hover:text-foreground'
           }`}
         >
-          {activeFilter === filter.type && (
-            <motion.div
-              layoutId="activeFilter"
-              className="absolute inset-0 bg-primary rounded-full glow-primary-sm"
-              transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-            />
-          )}
-          <span className="relative z-10 flex items-center gap-2">
-            {filter.icon}
-            {filter.label}
-          </span>
+          {filter.icon}
+          {filter.label}
         </button>
       ))}
     </div>
