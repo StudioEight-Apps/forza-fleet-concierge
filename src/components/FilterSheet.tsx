@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, SlidersHorizontal, Car, Truck, Zap, MapPin } from 'lucide-react';
+import { X, Car, Truck, Zap, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface FilterSheetProps {
   isOpen: boolean;
@@ -12,30 +12,61 @@ interface FilterSheetProps {
 }
 
 interface FilterState {
-  delivery: boolean;
-  instantBook: boolean;
-  vehicleType: 'all' | 'suv' | 'sports';
+  vehicleType: string[];
+  manufacturer: string[];
 }
 
 const vehicleTypes = [
-  { id: 'all' as const, label: 'All', icon: null },
-  { id: 'suv' as const, label: 'SUVs', icon: Truck },
-  { id: 'sports' as const, label: 'Sports', icon: Car },
+  { id: 'convertible', label: 'Convertible', icon: Sun },
+  { id: 'suv', label: 'SUV', icon: Truck },
+  { id: 'electric', label: 'Electric', icon: Zap },
+  { id: 'sports', label: 'Sports', icon: Car },
+];
+
+const manufacturers = [
+  { id: 'bentley', label: 'Bentley' },
+  { id: 'bmw', label: 'BMW' },
+  { id: 'cadillac', label: 'Cadillac' },
+  { id: 'corvette', label: 'Corvette' },
+  { id: 'ferrari', label: 'Ferrari' },
+  { id: 'lamborghini', label: 'Lamborghini' },
+  { id: 'land-rover', label: 'Land Rover' },
+  { id: 'mclaren', label: 'McLaren' },
+  { id: 'mercedes', label: 'Mercedes Benz' },
+  { id: 'porsche', label: 'Porsche' },
+  { id: 'rolls-royce', label: 'Rolls Royce' },
+  { id: 'tesla', label: 'Tesla' },
 ];
 
 const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProps) => {
   const [filters, setFilters] = useState<FilterState>({
-    delivery: false,
-    instantBook: false,
-    vehicleType: 'all',
+    vehicleType: [],
+    manufacturer: [],
   });
 
   const handleReset = () => {
     setFilters({
-      delivery: false,
-      instantBook: false,
-      vehicleType: 'all',
+      vehicleType: [],
+      manufacturer: [],
     });
+  };
+
+  const toggleVehicleType = (id: string) => {
+    setFilters(prev => ({
+      ...prev,
+      vehicleType: prev.vehicleType.includes(id)
+        ? prev.vehicleType.filter(t => t !== id)
+        : [...prev.vehicleType, id]
+    }));
+  };
+
+  const toggleManufacturer = (id: string) => {
+    setFilters(prev => ({
+      ...prev,
+      manufacturer: prev.manufacturer.includes(id)
+        ? prev.manufacturer.filter(m => m !== id)
+        : [...prev.manufacturer, id]
+    }));
   };
 
   return (
@@ -57,10 +88,10 @@ const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProp
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-card rounded-t-3xl max-h-[85vh] overflow-hidden"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-card rounded-t-3xl max-h-[85vh] flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
+            <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
               <button 
                 onClick={handleReset}
                 className="text-primary font-medium text-sm"
@@ -76,62 +107,57 @@ const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProp
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-4 space-y-6 overflow-y-auto max-h-[60vh]">
-              {/* Delivery Toggle */}
-              <div className="flex items-center justify-between py-3">
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">DELIVERY</p>
-                    <p className="text-sm text-muted-foreground">Get the car delivered directly to you</p>
+            {/* Scrollable Content */}
+            <ScrollArea className="flex-1 overflow-y-auto">
+              <div className="p-4 space-y-6">
+                {/* Vehicle Type */}
+                <div>
+                  <p className="font-medium mb-4 text-sm tracking-wide">VEHICLE TYPE</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {vehicleTypes.map((type) => (
+                      <button
+                        key={type.id}
+                        onClick={() => toggleVehicleType(type.id)}
+                        className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                          filters.vehicleType.includes(type.id)
+                            ? 'border-primary bg-primary/10'
+                            : 'border-border bg-secondary'
+                        }`}
+                      >
+                        <type.icon className="h-5 w-5" />
+                        <span className="text-sm font-medium">{type.label}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <Switch
-                  checked={filters.delivery}
-                  onCheckedChange={(checked) => setFilters({ ...filters, delivery: checked })}
-                />
-              </div>
 
-              {/* Instant Book Toggle */}
-              <div className="flex items-center justify-between py-3 border-t border-border">
-                <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">INSTANT BOOK</p>
-                    <p className="text-sm text-muted-foreground">Book immediately without waiting</p>
+                {/* Manufacturer */}
+                <div className="border-t border-border pt-6">
+                  <p className="font-medium mb-4 text-sm tracking-wide">MANUFACTURER</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {manufacturers.map((mfr) => (
+                      <button
+                        key={mfr.id}
+                        onClick={() => toggleManufacturer(mfr.id)}
+                        className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                          filters.manufacturer.includes(mfr.id)
+                            ? 'border-primary bg-primary/10'
+                            : 'border-border bg-secondary'
+                        }`}
+                      >
+                        <div className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center text-xs font-bold">
+                          {mfr.label.charAt(0)}
+                        </div>
+                        <span className="text-sm font-medium">{mfr.label}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <Switch
-                  checked={filters.instantBook}
-                  onCheckedChange={(checked) => setFilters({ ...filters, instantBook: checked })}
-                />
               </div>
-
-              {/* Vehicle Type */}
-              <div className="border-t border-border pt-4">
-                <p className="font-medium mb-4">VEHICLE TYPE</p>
-                <div className="grid grid-cols-3 gap-3">
-                  {vehicleTypes.map((type) => (
-                    <button
-                      key={type.id}
-                      onClick={() => setFilters({ ...filters, vehicleType: type.id })}
-                      className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all ${
-                        filters.vehicleType === type.id
-                          ? 'border-primary bg-primary/10'
-                          : 'border-border bg-secondary'
-                      }`}
-                    >
-                      {type.icon && <type.icon className="h-6 w-6 mb-2" />}
-                      <span className="text-sm font-medium">{type.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            </ScrollArea>
 
             {/* Apply Button */}
-            <div className="p-4 border-t border-border safe-area-bottom">
+            <div className="p-4 border-t border-border safe-area-bottom shrink-0">
               <Button 
                 onClick={() => {
                   onApply(filters);
