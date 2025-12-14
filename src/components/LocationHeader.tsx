@@ -1,3 +1,5 @@
+import forzaLogo from '@/assets/forza-logo.png';
+
 interface LocationHeaderProps {
   location: string;
   onLocationChange?: (location: string) => void;
@@ -6,13 +8,14 @@ interface LocationHeaderProps {
 const LocationHeader = ({ location, onLocationChange }: LocationHeaderProps) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background safe-area-top border-b border-border">
-      <div className="px-4 py-2">
-        <div className="flex flex-col items-center gap-1.5">
-          {/* Forza Logo Text */}
-          <div className="flex items-center">
-            <span className="text-lg font-bold text-foreground tracking-tight">FORZA</span>
-            <span className="text-lg font-light text-muted-foreground ml-1">EXOTICS</span>
-          </div>
+      <div className="px-4 py-3">
+        <div className="flex flex-col items-center gap-2">
+          {/* Forza Logo */}
+          <img 
+            src={forzaLogo} 
+            alt="Forza Exotic Car Rentals" 
+            className="h-12 w-auto object-contain"
+          />
           
           {/* Location Tabs - Centered below with green accent */}
           <div className="flex bg-secondary rounded-full p-0.5">
