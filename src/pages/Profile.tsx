@@ -30,11 +30,13 @@ const Profile = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-6"
           >
-            <div className="w-20 h-20 rounded-full bg-primary mx-auto mb-3 flex items-center justify-center">
-              <User className="h-10 w-10 text-primary-foreground" />
-            </div>
-            <h2 className="text-xl font-semibold mb-0.5">Guest User</h2>
-            <p className="text-muted-foreground text-sm">Sign in to access your account</p>
+            <img 
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
+              alt="John Smith"
+              className="w-20 h-20 rounded-full mx-auto mb-3 object-cover"
+            />
+            <h2 className="text-xl font-semibold mb-0.5">John Smith</h2>
+            <p className="text-muted-foreground text-sm">john.smith@email.com</p>
           </motion.div>
 
 

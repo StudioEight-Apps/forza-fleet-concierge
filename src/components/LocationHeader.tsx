@@ -7,14 +7,14 @@ interface LocationHeaderProps {
 
 const LocationHeader = ({ location, onLocationChange }: LocationHeaderProps) => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background safe-area-top border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background safe-area-top">
       <div className="px-4 py-2">
         <div className="flex items-center justify-between">
           {/* Forza Logo - Left aligned, larger */}
           <img 
             src={forzaLogo} 
             alt="Forza Exotic Car Rentals" 
-            className="h-14 w-auto object-contain"
+            className="h-16 w-auto object-contain"
           />
           
           {/* Location Tabs - Right aligned */}
