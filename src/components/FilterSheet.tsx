@@ -4,6 +4,19 @@ import { X, Car, Truck, Zap, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+// Import logos
+import bentleyLogo from '@/assets/logos/bentley.png';
+import bmwLogo from '@/assets/logos/bmw.png';
+import cadillacLogo from '@/assets/logos/cadillac.png';
+import ferrariLogo from '@/assets/logos/ferrari.png';
+import lamborghiniLogo from '@/assets/logos/lamborghini.png';
+import landRoverLogo from '@/assets/logos/land-rover.png';
+import mclarenLogo from '@/assets/logos/mclaren.png';
+import mercedesLogo from '@/assets/logos/mercedes.png';
+import porscheLogo from '@/assets/logos/porsche.png';
+import rollsRoyceLogo from '@/assets/logos/rolls-royce.png';
+import teslaLogo from '@/assets/logos/tesla.png';
+
 interface FilterSheetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,18 +37,17 @@ const vehicleTypes = [
 ];
 
 const manufacturers = [
-  { id: 'bentley', label: 'Bentley' },
-  { id: 'bmw', label: 'BMW' },
-  { id: 'cadillac', label: 'Cadillac' },
-  { id: 'corvette', label: 'Corvette' },
-  { id: 'ferrari', label: 'Ferrari' },
-  { id: 'lamborghini', label: 'Lamborghini' },
-  { id: 'land-rover', label: 'Land Rover' },
-  { id: 'mclaren', label: 'McLaren' },
-  { id: 'mercedes', label: 'Mercedes Benz' },
-  { id: 'porsche', label: 'Porsche' },
-  { id: 'rolls-royce', label: 'Rolls Royce' },
-  { id: 'tesla', label: 'Tesla' },
+  { id: 'bentley', label: 'Bentley', logo: bentleyLogo },
+  { id: 'bmw', label: 'BMW', logo: bmwLogo },
+  { id: 'cadillac', label: 'Cadillac', logo: cadillacLogo },
+  { id: 'ferrari', label: 'Ferrari', logo: ferrariLogo },
+  { id: 'lamborghini', label: 'Lamborghini', logo: lamborghiniLogo },
+  { id: 'land-rover', label: 'Land Rover', logo: landRoverLogo },
+  { id: 'mclaren', label: 'McLaren', logo: mclarenLogo },
+  { id: 'mercedes', label: 'Mercedes Benz', logo: mercedesLogo },
+  { id: 'porsche', label: 'Porsche', logo: porscheLogo },
+  { id: 'rolls-royce', label: 'Rolls Royce', logo: rollsRoyceLogo },
+  { id: 'tesla', label: 'Tesla', logo: teslaLogo },
 ];
 
 const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProps) => {
@@ -145,9 +157,11 @@ const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProp
                             : 'border-border bg-secondary'
                         }`}
                       >
-                        <div className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center text-xs font-bold">
-                          {mfr.label.charAt(0)}
-                        </div>
+                        <img 
+                          src={mfr.logo} 
+                          alt={mfr.label} 
+                          className="w-6 h-6 object-contain"
+                        />
                         <span className="text-sm font-medium">{mfr.label}</span>
                       </button>
                     ))}
