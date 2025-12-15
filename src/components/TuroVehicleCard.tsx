@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { Vehicle } from '@/data/vehicles';
-import { Star, User } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useFavorites } from '@/hooks/useFavorites';
+import { Button } from '@/components/ui/button';
 
 interface TuroVehicleCardProps {
   vehicle: Vehicle;
@@ -27,6 +28,9 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
     toggleFavorite(vehicle.id);
   };
 
+  // Format transmission to be shorter
+  const transmissionShort = vehicle.specs.transmission.includes('Auto') ? 'Automatic' : 'Manual';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -35,7 +39,7 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
     >
       <Link to={`/vehicle/${vehicle.id}`} className="block">
         <div className="bg-background overflow-hidden">
-          {/* Image - Shorter aspect ratio */}
+          {/* Image */}
           <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
             <img
               src={vehicle.image}
@@ -46,12 +50,12 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
             {/* Heart icon */}
             <button 
               onClick={handleFavoriteClick}
-              className="absolute top-2 right-2 p-1.5 transition-transform active:scale-90"
+              className="absolute top-3 right-3 p-1.5 transition-transform active:scale-90"
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 32 32" 
-                className={`w-5 h-5 stroke-white stroke-2 transition-colors ${
+                className={`w-6 h-6 stroke-white stroke-2 transition-colors ${
                   favorited ? 'fill-red-500' : 'fill-black/50'
                 }`}
               >
@@ -60,31 +64,36 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
             </button>
           </div>
 
-          {/* Content - Compact spacing */}
-          <div className="pt-2 pb-1">
-            <div className="flex items-center justify-between">
-              <h3 className="font-medium text-sm text-foreground">
+          {/* Content */}
+          <div className="pt-3 pb-2">
+            {/* Title and Rating */}
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="font-semibold text-base text-foreground">
                 {vehicle.brand} {vehicle.model}
               </h3>
-              {/* Rating with green star */}
-              <div className="flex items-center gap-0.5">
-                <Star className="h-3 w-3 fill-primary text-primary" />
-                <span className="text-xs text-foreground">{rating.toFixed(2)}</span>
+              <div className="flex items-center gap-1">
+                <Star className="h-3.5 w-3.5 fill-primary text-primary" />
+                <span className="text-sm text-foreground">{rating.toFixed(2)}</span>
               </div>
             </div>
             
-            {/* Year, Seats and Price on same line */}
-            <div className="flex items-center justify-between mt-0.5">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">{vehicle.year}</span>
-                <div className="flex items-center gap-0.5 text-muted-foreground">
-                  <User className="h-3 w-3" />
-                  <span className="text-xs">{vehicle.seats}</span>
-                </div>
-              </div>
-              <span className="text-sm font-bold text-primary">
-                ${price}<span className="font-normal text-muted-foreground text-xs">/day</span>
-              </span>
+            {/* Details: Seats · Transmission · Location */}
+            <p className="text-sm text-muted-foreground mb-2">
+              {vehicle.seats} seats · {transmissionShort} · Miami
+            </p>
+            
+            {/* Price and View Button */}
+            <div className="flex items-center justify-between">
+              <p className="text-base font-semibold text-foreground">
+                From ${price.toLocaleString()}<span className="font-normal text-muted-foreground">/day</span>
+              </p>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="rounded-full px-5 h-9 border-foreground/20 hover:bg-muted"
+              >
+                View
+              </Button>
             </div>
           </div>
         </div>
