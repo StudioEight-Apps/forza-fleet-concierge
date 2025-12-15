@@ -4,7 +4,6 @@ import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useFavorites } from '@/hooks/useFavorites';
-import { Button } from '@/components/ui/button';
 
 interface TuroVehicleCardProps {
   vehicle: Vehicle;
@@ -37,26 +36,30 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
     >
-      <Link to={`/vehicle/${vehicle.id}`} className="block">
-        <div className="bg-background overflow-hidden">
+      <Link to={`/vehicle/${vehicle.id}`} className="block group">
+        <motion.div 
+          className="bg-background overflow-hidden rounded-2xl shadow-sm"
+          whileTap={{ scale: 0.98, opacity: 0.95 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+        >
           {/* Image */}
-          <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
+          <div className="relative aspect-[16/10] overflow-hidden">
             <img
               src={vehicle.image}
               alt={`${vehicle.brand} ${vehicle.model}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
 
-            {/* Heart icon */}
+            {/* Heart icon with circular container */}
             <button 
               onClick={handleFavoriteClick}
-              className="absolute top-3 right-3 p-1.5 transition-transform active:scale-90"
+              className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all active:scale-90 hover:bg-black/30"
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 32 32" 
-                className={`w-6 h-6 stroke-white stroke-2 transition-colors ${
-                  favorited ? 'fill-red-500' : 'fill-black/50'
+                className={`w-5 h-5 stroke-white stroke-[1.5] transition-colors ${
+                  favorited ? 'fill-red-500' : 'fill-white/30'
                 }`}
               >
                 <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
@@ -65,15 +68,15 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
           </div>
 
           {/* Content */}
-          <div className="pt-3 pb-2">
+          <div className="pt-3 pb-3 px-1">
             {/* Title and Rating */}
             <div className="flex items-center justify-between mb-1">
               <h3 className="font-semibold text-base text-foreground">
                 {vehicle.brand} {vehicle.model}
               </h3>
-              <div className="flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-                <span className="text-sm text-foreground">{rating.toFixed(2)}</span>
+              <div className="flex items-center gap-1 opacity-70">
+                <Star className="h-3.5 w-3.5 fill-muted-foreground text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">{rating.toFixed(2)}</span>
               </div>
             </div>
             
@@ -82,21 +85,12 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
               {vehicle.seats} seats · {transmissionShort} · Miami
             </p>
             
-            {/* Price and View Button */}
-            <div className="flex items-center justify-between">
-              <p className="text-base font-semibold text-foreground">
-                From ${price.toLocaleString()}<span className="font-normal text-muted-foreground">/day</span>
-              </p>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="rounded-full px-5 h-9 border-foreground/20 hover:bg-muted"
-              >
-                View
-              </Button>
-            </div>
+            {/* Price */}
+            <p className="text-base font-semibold text-foreground">
+              From ${price.toLocaleString()}<span className="font-normal text-muted-foreground">/day</span>
+            </p>
           </div>
-        </div>
+        </motion.div>
       </Link>
     </motion.div>
   );
