@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Vehicle } from '@/data/vehicles';
 import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useFavorites } from '@/hooks/useFavorites';
 
 interface TuroVehicleCardProps {
@@ -14,6 +14,7 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
   const price = vehicle.originalPrice;
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorited = isFavorite(vehicle.id);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   // Stable rating based on vehicle id
   const rating = useMemo(() => {
@@ -24,6 +25,10 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!favorited) {
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 600);
+    }
     toggleFavorite(vehicle.id);
   };
 
@@ -55,15 +60,42 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
               onClick={handleFavoriteClick}
               className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all active:scale-90 hover:bg-black/30"
             >
-              <svg 
+              <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 32 32" 
                 className={`w-5 h-5 stroke-white stroke-[1.5] transition-colors ${
                   favorited ? 'fill-red-500' : 'fill-white/30'
                 }`}
+                animate={isAnimating ? {
+                  scale: [1, 1.3, 0.9, 1.1, 1],
+                } : {}}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
                 <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
-              </svg>
+              </motion.svg>
+              
+              {/* Burst particles on favorite */}
+              <AnimatePresence>
+                {isAnimating && (
+                  <>
+                    {[...Array(6)].map((_, i) => (
+                      <motion.span
+                        key={i}
+                        className="absolute w-1.5 h-1.5 rounded-full bg-red-400"
+                        initial={{ scale: 0, x: 0, y: 0, opacity: 1 }}
+                        animate={{
+                          scale: [0, 1, 0],
+                          x: Math.cos((i * 60 * Math.PI) / 180) * 20,
+                          y: Math.sin((i * 60 * Math.PI) / 180) * 20,
+                          opacity: [1, 1, 0],
+                        }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                      />
+                    ))}
+                  </>
+                )}
+              </AnimatePresence>
             </button>
           </div>
 
