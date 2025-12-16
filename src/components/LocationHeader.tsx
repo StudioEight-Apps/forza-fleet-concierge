@@ -18,23 +18,23 @@ const LocationHeader = ({ location, onLocationChange }: LocationHeaderProps) => 
           />
           
           {/* Location Tabs - Right aligned */}
-          <div className="flex bg-secondary rounded-full p-0.5">
+          <div className="flex bg-secondary/60 rounded-full p-0.5">
             <button
               onClick={() => onLocationChange?.('Miami')}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                 location === 'Miami' 
                   ? 'bg-primary text-primary-foreground shadow-sm' 
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-muted-foreground/60 hover:text-muted-foreground'
               }`}
             >
               Miami
             </button>
             <button
               onClick={() => onLocationChange?.('Fort Lauderdale')}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                 location === 'Fort Lauderdale' 
                   ? 'bg-primary text-primary-foreground shadow-sm' 
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-muted-foreground/60 hover:text-muted-foreground'
               }`}
             >
               Ft. Lauderdale

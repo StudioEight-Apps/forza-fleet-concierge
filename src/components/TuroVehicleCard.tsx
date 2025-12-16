@@ -43,9 +43,9 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
     >
       <Link to={`/vehicle/${vehicle.id}`} className="block group">
         <motion.div 
-          className="bg-background overflow-hidden rounded-2xl shadow-sm"
-          whileTap={{ scale: 0.98, opacity: 0.95 }}
-          transition={{ duration: 0.15, ease: "easeOut" }}
+          className="bg-background overflow-hidden rounded-3xl shadow-[0_2px_8px_rgba(0,0,0,0.06)]"
+          whileTap={{ scale: 0.985, opacity: 0.92 }}
+          transition={{ duration: 0.12, ease: "easeOut" }}
         >
           {/* Image */}
           <div className="relative aspect-[16/10] overflow-hidden">
@@ -100,26 +100,26 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
           </div>
 
           {/* Content */}
-          <div className="pt-3 pb-3 px-1">
+          <div className="pt-2.5 pb-2.5 px-1">
             {/* Title and Rating */}
-            <div className="flex items-center justify-between mb-1">
-              <h3 className="font-semibold text-base text-foreground">
+            <div className="flex items-center justify-between mb-0.5">
+              <h3 className="font-semibold text-base text-foreground leading-tight">
                 {vehicle.brand} {vehicle.model}
               </h3>
-              <div className="flex items-center gap-1 opacity-70">
-                <Star className="h-3.5 w-3.5 fill-muted-foreground text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">{rating.toFixed(2)}</span>
+              <div className="flex items-center gap-0.5 opacity-50">
+                <Star className="h-3 w-3 fill-muted-foreground/70 text-muted-foreground/70" />
+                <span className="text-xs text-muted-foreground/70">{rating.toFixed(2)}</span>
               </div>
             </div>
             
             {/* Details: Seats · Transmission · Location */}
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-sm text-muted-foreground/80 mb-1.5 leading-tight">
               {vehicle.seats} seats · {transmissionShort} · Miami
             </p>
             
             {/* Price */}
-            <p className="text-base font-semibold text-foreground">
-              From ${price.toLocaleString()}<span className="font-normal text-muted-foreground">/day</span>
+            <p className="text-base font-semibold text-foreground leading-tight">
+              From ${price.toLocaleString()}<span className="font-normal text-muted-foreground/80">/day</span>
             </p>
           </div>
         </motion.div>
