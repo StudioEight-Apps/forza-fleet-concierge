@@ -130,13 +130,13 @@ const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProp
                       <button
                         key={type.id}
                         onClick={() => toggleVehicleType(type.id)}
-                        className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                        className={`flex items-center gap-3 p-4 rounded-2xl border transition-all duration-200 ${
                           filters.vehicleType.includes(type.id)
-                            ? 'border-primary bg-primary/10'
-                            : 'border-border bg-secondary'
+                            ? 'border-primary/60 bg-primary/8'
+                            : 'border-border/50 bg-secondary/50'
                         }`}
                       >
-                        <type.icon className="h-5 w-5" />
+                        <type.icon className="h-5 w-5 text-muted-foreground" />
                         <span className="text-sm font-medium">{type.label}</span>
                       </button>
                     ))}
@@ -151,10 +151,10 @@ const FilterSheet = ({ isOpen, onClose, onApply, vehicleCount }: FilterSheetProp
                       <button
                         key={mfr.id}
                         onClick={() => toggleManufacturer(mfr.id)}
-                        className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+                        className={`flex items-center gap-3 p-4 rounded-2xl border transition-all duration-200 ${
                           filters.manufacturer.includes(mfr.id)
-                            ? 'border-primary bg-primary/10'
-                            : 'border-border bg-secondary'
+                            ? 'border-primary/60 bg-primary/8'
+                            : 'border-border/50 bg-secondary/50'
                         }`}
                       >
                         <img 
