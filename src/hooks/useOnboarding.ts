@@ -6,8 +6,6 @@ export const useOnboarding = () => {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // TEMP: Reset to show splash screen - remove this line after testing
-    localStorage.removeItem(ONBOARDING_KEY);
     const completed = localStorage.getItem(ONBOARDING_KEY) === 'true';
     setHasCompletedOnboarding(completed);
   }, []);

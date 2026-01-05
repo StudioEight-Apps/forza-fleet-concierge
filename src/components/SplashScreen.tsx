@@ -8,11 +8,12 @@ interface SplashScreenProps {
 const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center"
+      style={{ backgroundColor: '#F5F6F7' }}
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.3 }}
       onAnimationComplete={() => {
         setTimeout(onComplete, 1800);
       }}
@@ -20,10 +21,10 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       <motion.img
         src={splashLogo}
         alt="Forza Exotic Car Rentals"
-        className="w-64 h-auto"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="h-[18vh] w-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       />
     </motion.div>
   );
