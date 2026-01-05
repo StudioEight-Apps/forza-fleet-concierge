@@ -112,7 +112,7 @@ const Index = () => {
         </div>
 
         {/* Vehicle List */}
-        <div className="px-4 py-4 space-y-4">
+        <div className="px-4 py-5 space-y-6">
           {vehicles.map((vehicle, index) => (
             <TuroVehicleCard key={vehicle.id} vehicle={vehicle} index={index} />
           ))}
