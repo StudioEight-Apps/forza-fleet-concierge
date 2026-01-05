@@ -5,6 +5,8 @@ import LocationHeader from '@/components/LocationHeader';
 import TuroVehicleCard from '@/components/TuroVehicleCard';
 import IOSBottomNav from '@/components/IOSBottomNav';
 import FilterSheet from '@/components/FilterSheet';
+import Onboarding from '@/components/Onboarding';
+import { useOnboarding } from '@/hooks/useOnboarding';
 
 import { getVehiclesByType } from '@/data/vehicles';
 
@@ -14,6 +16,7 @@ interface ActiveFilters {
 }
 
 const Index = () => {
+  const { hasCompletedOnboarding, completeOnboarding, isLoading } = useOnboarding();
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
     vehicleType: [],
     manufacturer: [],
@@ -42,6 +45,16 @@ const Index = () => {
   });
 
   const activeFilterCount = activeFilters.vehicleType.length + activeFilters.manufacturer.length;
+
+  // Show nothing while checking onboarding status
+  if (isLoading) {
+    return null;
+  }
+
+  // Show onboarding on first launch
+  if (!hasCompletedOnboarding) {
+    return <Onboarding onComplete={completeOnboarding} />;
+  }
 
   return (
     <div className="min-h-screen bg-background pb-24">
