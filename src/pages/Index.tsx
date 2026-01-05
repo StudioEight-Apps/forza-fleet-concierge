@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { SlidersHorizontal } from 'lucide-react';
 import LocationHeader from '@/components/LocationHeader';
 import TuroVehicleCard from '@/components/TuroVehicleCard';
 import IOSBottomNav from '@/components/IOSBottomNav';
 import FilterSheet from '@/components/FilterSheet';
-import SplashScreen from '@/components/SplashScreen';
-import { useOnboarding } from '@/hooks/useOnboarding';
 
 import { getVehiclesByType } from '@/data/vehicles';
 
@@ -16,7 +13,6 @@ interface ActiveFilters {
 }
 
 const Index = () => {
-  const { hasCompletedOnboarding, completeOnboarding, isLoading } = useOnboarding();
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
     vehicleType: [],
     manufacturer: [],
@@ -45,16 +41,6 @@ const Index = () => {
   });
 
   const activeFilterCount = activeFilters.vehicleType.length + activeFilters.manufacturer.length;
-
-  // Show nothing while checking onboarding status
-  if (isLoading) {
-    return null;
-  }
-
-  // Show splash screen on first launch
-  if (!hasCompletedOnboarding) {
-    return <SplashScreen onComplete={completeOnboarding} />;
-  }
 
   return (
     <div className="min-h-screen bg-background pb-24">
