@@ -58,7 +58,7 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
             {/* Heart icon with circular container */}
             <button 
               onClick={handleFavoriteClick}
-              className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all active:scale-90 hover:bg-black/30"
+              className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm transition-all active:scale-90"
             >
               <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
