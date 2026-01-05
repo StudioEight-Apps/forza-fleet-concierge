@@ -43,7 +43,7 @@ const TuroVehicleCard = ({ vehicle, index }: TuroVehicleCardProps) => {
     >
       <Link to={`/vehicle/${vehicle.id}`} className="block group">
         <motion.div 
-          className="bg-secondary/60 overflow-hidden rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04),0_4px_24px_rgba(0,0,0,0.02)]"
+          className="bg-card overflow-hidden rounded-3xl border border-border/40 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_16px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.08),0_8px_32px_rgba(0,0,0,0.06)] group-hover:-translate-y-1"
           whileTap={{ scale: 0.985, opacity: 0.92 }}
           transition={{ duration: 0.12, ease: "easeOut" }}
         >
