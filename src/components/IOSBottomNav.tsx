@@ -20,7 +20,7 @@ const IOSBottomNav = () => {
       transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.2 }}
       className="fixed bottom-4 left-4 right-4 z-50 safe-area-bottom"
     >
-      <div className="flex items-center justify-around h-16 bg-card/80 backdrop-blur-2xl border border-border/30 rounded-[20px] shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+      <div className="flex items-center justify-around h-[72px] bg-card/90 backdrop-blur-xl border border-border/20 rounded-[24px] shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -33,24 +33,21 @@ const IOSBottomNav = () => {
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-x-2 inset-y-2 bg-primary/10 rounded-2xl"
+                  className="absolute inset-x-3 inset-y-3 bg-primary/8 rounded-2xl"
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
               
-              <div className="relative z-10 flex flex-col items-center gap-0.5">
+              <div className="relative z-10 flex flex-col items-center gap-1">
                 <item.icon 
                   className={`h-[22px] w-[22px] transition-all duration-200 ${
                     isActive 
                       ? 'text-primary stroke-[2]' 
-                      : 'text-muted-foreground/70 stroke-[1.5]'
+                      : 'text-foreground/50 stroke-[1.5]'
                   }`}
-                  style={isActive ? { 
-                    filter: 'drop-shadow(0 0 6px hsl(var(--primary) / 0.5))' 
-                  } : undefined}
                 />
                 <span className={`text-[10px] font-medium transition-colors duration-200 ${
-                  isActive ? 'text-primary' : 'text-muted-foreground/70'
+                  isActive ? 'text-primary' : 'text-foreground/50'
                 }`}>
                   {item.label}
                 </span>
