@@ -5,7 +5,7 @@ import LocationHeader from '@/components/LocationHeader';
 import TuroVehicleCard from '@/components/TuroVehicleCard';
 import IOSBottomNav from '@/components/IOSBottomNav';
 import FilterSheet from '@/components/FilterSheet';
-import Onboarding from '@/components/Onboarding';
+import SplashScreen from '@/components/SplashScreen';
 import { useOnboarding } from '@/hooks/useOnboarding';
 
 import { getVehiclesByType } from '@/data/vehicles';
@@ -51,9 +51,9 @@ const Index = () => {
     return null;
   }
 
-  // Show onboarding on first launch
+  // Show splash screen on first launch
   if (!hasCompletedOnboarding) {
-    return <Onboarding onComplete={completeOnboarding} />;
+    return <SplashScreen onComplete={completeOnboarding} />;
   }
 
   return (
