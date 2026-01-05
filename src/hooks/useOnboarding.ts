@@ -6,6 +6,11 @@ export const useOnboarding = () => {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // TEMP: Clear all app data for reset - remove after testing
+    localStorage.removeItem('forza_onboarding_complete');
+    localStorage.removeItem('forza_favorites');
+    localStorage.removeItem('forza_bookings');
+    
     const completed = localStorage.getItem(ONBOARDING_KEY) === 'true';
     setHasCompletedOnboarding(completed);
   }, []);
